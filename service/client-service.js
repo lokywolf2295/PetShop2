@@ -11,7 +11,14 @@ const createClient = (name, email) => { //funcion que crea el cliente recibiendo
   });
 };
 
+const deleteClient = (id) => { //función que permite eliminar los clientes del json
+  return fetch(`http://localhost:3000/profile/${id}`, {
+    method: "DELETE",
+  });
+};
+
 export const clientServices = { //exportamos la función padre que contiene las demas funciones
   listClients,
   createClient,
+  deleteClient,
 };
