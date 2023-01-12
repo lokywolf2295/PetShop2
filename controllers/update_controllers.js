@@ -2,21 +2,25 @@ import { clientServices } from "../service/client-service.js";
 
 const form = document.querySelector("[data-form]"); //almacena el contenido del formulario
 
-const getInformation = () => { //obtendrá la información del cada cliente mediante su id
+const getInformation = async() => { //convertimos la función en una asincrona //obtendrá la información del cada cliente mediante su id
   const url = new URL(window.location);
   const id = url.searchParams.get("id");
-
-  if (id === null) { //en caso de que no encuentre un id se redirecciona
-    window.location.href = "/screens/error.html";
-  }
 
   const name = document.querySelector("[data-name]"); //almacenamos la info de nombre y email
   const email = document.querySelector("[data-email]");
 
-  clientServices.detailClient(id).then((perfil) => { //llamamos a la funcion de detalles y le pasamos el nombre y email recibidos para que los almacene en el json
-    name.value = perfil.name;
-    email.value = perfil.email;
-  });
+  try {
+    const profile = await clientServices.detailClient(id); //llamamos a la funcion de detalles y le pasamos el nombre y email recibidos para que los almacene en el json
+    if (profile.name && profile.email) {
+      name.value = profile.name;
+      email.value = profile.email;
+    } else { //creamos un objeto de la clase error para llamar al catch
+      throw new Error();
+    }
+  } catch (error) {
+    //en caso de que se produzca un error
+    window.location.href = "/screens/error.html";
+  }
 };
 
 getInformation();//llamamos a la funcion obtener información
