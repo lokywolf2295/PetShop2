@@ -12,7 +12,7 @@ const createNewLine = (name, email, id) => { //crea las filas de la tabla que co
         <ul class="table__button-control">
           <li>
             <a
-              href="../screens/edit_client.html"
+              href="../screens/edit_client.html?id=${id}"
               class="simple-button simple-button--edit"
             >
               Editar
