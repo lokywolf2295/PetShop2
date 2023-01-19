@@ -1,7 +1,8 @@
 import { clientServices } from "../service/client-service.js";
 
 //backticks
-const createNewLine = (name, email, id) => { //crea las filas de la tabla que contiene el nombre, email e id
+const createNewLine = (name, email, id) => {
+  //crea las filas de la tabla que contiene el nombre, email e id
   const line = document.createElement("tr");
   const content = `
       <td class="td" data-td>
@@ -29,22 +30,26 @@ const createNewLine = (name, email, id) => { //crea las filas de la tabla que co
   line.innerHTML = content;
 
   const btn = line.querySelector("button"); //recibimos el llamado del boton
-  btn.addEventListener("click", () => { //escuchamos el evento del click
+  btn.addEventListener("click", () => {
+    //escuchamos el evento del click
     const id = btn.id;
-    clientServices
-      .deleteClient(id) //llamamos a la función y le pasamos el id
-      .then((response) => {
-        Swal.fire({ //luego de eliminar correctamente aparece un pop up de exito
-          position: "center",
-          icon: "success",
-          title: "Eliminado Exitosamente",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((err) => alert("Ocurrió un error"));
-  });
 
+    Swal.fire({
+      //luego de eliminar correctamente aparece un pop up de exito
+      position: "center",
+      icon: "success",
+      title: "Eliminado Exitosamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    setTimeout(() => { //le agrego un timeout para que el mensaje de exito se vea correctamente
+      clientServices
+        .deleteClient(id) //llamamos a la función y le pasamos el id
+        .then((response) => {})
+        .catch((err) => alert("Ocurrió un error"));
+    }, 1500);
+  });
   return line;
 };
 
